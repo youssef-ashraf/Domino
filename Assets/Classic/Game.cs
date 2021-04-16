@@ -9,18 +9,19 @@ using UnityEngineInternal;
 public class Game : MonoBehaviour
 {
     Piece[] Pieces = new Piece[28];
-    Piece[] Hand1 = new Piece[7];
-    Piece[] Hand2 = new Piece[7];
-    Piece[] Hand3 = new Piece[7];
-    Piece[] Hand4 = new Piece[7];
+    public Piece[] Hand1 = new Piece[7];
+    public Piece[] Hand2 = new Piece[7];
+    public Piece[] Hand3 = new Piece[7];
+    public Piece[] Hand4 = new Piece[7];
 
-    GameObject[] Hand2_rand = new GameObject[7];
-    GameObject[] Hand3_rand = new GameObject[7];
-    GameObject[] Hand4_rand = new GameObject[7];
+    public GameObject[] Hand1_rand = new GameObject[7];
+    public GameObject[] Hand2_rand = new GameObject[7];
+    public GameObject[] Hand3_rand = new GameObject[7];
+    public GameObject[] Hand4_rand = new GameObject[7];
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         float start_pos = -2.88f;
         int i = 0;
@@ -60,12 +61,15 @@ public class Game : MonoBehaviour
         }
 
 
+        i = 0;
         //Visualisation For Hand1
-        foreach(Piece x in Hand1)
+        foreach (Piece x in Hand1)
         {
             var g = GameObject.Find(x.big.ToString() + '_' + x.small.ToString());
+            Hand1_rand[i] = g;
             g.transform.position = new Vector3(start_pos, -3.9f, g.transform.position.z);
             start_pos = start_pos + 0.96f;
+            i++;
         }
         start_pos= -2.88f;
 
@@ -104,7 +108,7 @@ public class Game : MonoBehaviour
             i++;
         }
 
-
+        
     }
 
     // Update is called once per frame
@@ -114,7 +118,7 @@ public class Game : MonoBehaviour
     }
 }
 
-class Piece
+public class Piece
 {
    public int big;
    public int small;
