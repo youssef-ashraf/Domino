@@ -64,9 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Classic\CPU.cs" />
+    <Compile Include="Assets\Classic\CPU_Move.cs" />
     <Compile Include="Assets\Classic\Clickable.cs" />
     <Compile Include="Assets\Classic\Game.cs" />
     <Compile Include="Assets\Classic\Game_Controler.cs" />
+    <Compile Include="Assets\Classic\OnTouchDown.cs" />
     <Compile Include="Assets\Classic\Player.cs" />
     <Compile Include="Assets\Classic\Positions.cs" />
     <Reference Include="UnityEngine">

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Clickable : MonoBehaviour
 {
-    int going=100;
+    int going = 100;
     bool isgoing = true;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Clickable : MonoBehaviour
                 isgoing = false;
             }
         }
-        if(!isgoing)
+        if (!isgoing)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(gameObject.GetComponent<SpriteRenderer>().color.r + 0.01f, gameObject.GetComponent<SpriteRenderer>().color.g + 0.01f, gameObject.GetComponent<SpriteRenderer>().color.b + 0.01f);
             going += 1;
@@ -34,6 +34,9 @@ public class Clickable : MonoBehaviour
                 isgoing = true;
             }
         }
-
+        
+        
     }
+    
+
 }

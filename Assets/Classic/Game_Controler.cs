@@ -5,8 +5,11 @@ using UnityEngine;
 public class Game_Controler : MonoBehaviour
 {
     public int round = 1;
-    int left,right,lp,rp,play_num=0;
-    public bool begining;
+    public int left, right, play_num=0; //Left playable - Right playable - Left position - Right position
+    public float lp, rp;
+    public bool begining,turn;
+    public Piece leftpiece, rightpiece;
+    public float rf = 1, lf = 1;
 
 
 
@@ -16,6 +19,11 @@ public class Game_Controler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        leftpiece = new Piece();
+        rightpiece = new Piece();
+        lp = 0;
+        rp = 0;
+
         begining = true;
         Game g = GameObject.Find("Game_Starter").GetComponent<Game>();
         if (round==1)
@@ -65,13 +73,46 @@ public class Game_Controler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (play_num == 1)
-        //{
-        //    GameObject.Find("Player").GetComponent<Player>().turn = true;
-        //}
-        //else 
-        //{ 
-        //    GameObject.Find("CPU_" + play_num.ToString()).GetComponent<CPU>().turn = true; 
-        //}
+        if (turn)
+        {
+            if(rp>5)
+            {
+                rf = 2;
+            }
+            if (lp > 5)
+            {
+                lf = 2;
+            }
+
+
+
+            GameObject.Find("Player").GetComponent<Player>().turn = false;
+            for (int i = 2; i < 5; i++)
+            { 
+                GameObject.Find("CPU_" + i).GetComponent<CPU>().turn = false; 
+            }
+            
+            if (play_num == 1)
+            {
+                play_num = 3;
+            }
+            else if (play_num == 3)
+            {
+                play_num = 2;
+            }
+            else if (play_num == 2)
+            {
+                play_num = 4;
+            }
+            else if (play_num == 4)
+            {
+                play_num = 1;
+            }
+
+            if (play_num == 1)
+                GameObject.Find("Player").GetComponent<Player>().turn = true;
+            else GameObject.Find("CPU_" + play_num.ToString()).GetComponent<CPU>().turn = true;
+            turn = false;
+        }
     }
 }
