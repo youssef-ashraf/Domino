@@ -176,4 +176,5 @@ public class CPU : MonoBehaviour
         yield return new WaitForSeconds(1);
         g.turn = true;
     }
+    
 }

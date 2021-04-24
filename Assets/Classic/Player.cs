@@ -12,9 +12,11 @@ public class Player : MonoBehaviour
     public int played;
     public bool played2;
     Game_Controler g;
+    bool skipper;
     // Start is called before the first frame update
     void Start()
     {
+        skipper = true;
         g = GameObject.Find("Game_Controler").GetComponent<Game_Controler>();
         hand = GameObject.Find("Game_Starter").GetComponent<Game>().Hand1;
         hand_graph = GameObject.Find("Game_Starter").GetComponent<Game>().Hand1_rand;
@@ -69,6 +71,22 @@ public class Player : MonoBehaviour
                 }
             }
 
+            for (int i = 0; i < 7; i++)
+            {
+
+                if(clicky[i])
+                {
+                    //print(i);
+                    skipper = false;
+                }
+            }
+            if(skipper)
+            {
+                //print("a");
+                StartCoroutine(skip());
+                
+            }
+            skipper = true;
         }
     }
 
@@ -90,4 +108,25 @@ public class Player : MonoBehaviour
         }
         
     }
+
+
+
+
+    IEnumerator skip()
+    {
+        turn = false;
+        Vector3 vec = new Vector3(0, -2.25f, 0);
+        Quaternion eu = Quaternion.identity;
+        
+        
+
+
+        GameObject skip = GameObject.Instantiate(GameObject.Find("Skip"), vec, eu);
+        yield return new WaitForSeconds(2);
+        Destroy(skip);
+        yield return new WaitForSeconds(1);
+        g.turn = true;
+    }
+
+    
 }

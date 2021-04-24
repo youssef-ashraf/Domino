@@ -21,7 +21,7 @@ public class CPU_Move : MonoBehaviour
 
     public void commit(int up,int down,CPU p)
     {
-
+        
         p.turn = false;
         game = GameObject.Find("Game_Controler");
         g = GameObject.Find("Game_Controler").GetComponent<Game_Controler>();
@@ -51,92 +51,200 @@ public class CPU_Move : MonoBehaviour
             else if (g.play_num == 4)
                 StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
 
-            StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-            g.rp += 0.72f;
-            g.lp -= 0.72f;
+            StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
             g.right = 6;
             g.left = 6;
             g.begining = false;
             p.setagian(up, down);
+            g.V_left.x -= 0.72f;
+            g.V_right.x += 0.72f;
         }
-        else if (up == down)
+        else if(g.begining)
         {
+            g.leftpiece.big = up;
+            g.leftpiece.small = down;
+            g.rightpiece.big = up;
+            g.rightpiece.small = down;
+
+
             if (g.play_num == 3)
                 StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
             else if (g.play_num == 4)
                 StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
 
+            StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+            g.right = up;
+            g.left = down;
+            g.begining = false;
+            p.setagian(up, down);
+            g.V_left.x -= 0.72f;
+            g.V_right.x += 0.72f;
+        }
+
+        else if (up == down)
+        {
+            //print(g.left_played + " "+ g.right_played);
             if (up == g.left)
+            {
+
+                if (g.left_played == 5 )
                 {
+                    g.V_left.x += 0.48f;
+                    g.V_left.y += 0.48f;
+                }
+                
+
+
+                
+
+
+
+                if (g.left_played < 5)
+                {
+                    g.left_played++;
+
+                    if (g.play_num == 3)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                    else if (g.play_num == 4)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
                     g.leftpiece.big = up;
                     g.leftpiece.small = down;
 
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    g.lp -= 0.72f;
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                    g.V_left.x -= 0.72f;
                     g.left = up;
                     p.setagian(up, down);
                 }
-                else
+
+                else if (g.left_played > 4 && g.left_played < 7)
                 {
+                    //if(g.left_played == 6)
+                    //{
+                    //    g.V_left.x -= 0.48f;
+                    //}
+
+                    //print("r true");
+                    g.left_played++;
+                    g.leftpiece.big = up;
+                    g.leftpiece.small = down;
+
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                    if (g.play_num == 2)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+
+                    g.V_left.y += 0.72f;
+                    g.left = up;
+                    p.setagian(up, down);
+                }
+                else if (g.left_played > 6)
+                {
+                    if (g.left_played == 7)
+                    {
+                        g.V_left.x += 0.48f;
+                        g.V_left.y -= 0.48f;
+                    }
+
+                        g.left_played++;
+
+                    if (g.play_num == 3)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                    else if (g.play_num == 4)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                    g.leftpiece.big = up;
+                    g.leftpiece.small = down;
+
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                    g.V_left.x += 0.72f;
+                    g.left = up;
+                    p.setagian(up, down);
+                }
+
+            }
+            else
+            {
+                if (g.right_played == 5 )
+                {
+                    g.V_right.x -= 0.48f;
+                    g.V_right.y -= 0.48f;
+                }
+                
+
+
+                if (g.right_played < 5)
+                {
+                    g.right_played++;
+                    if (g.play_num == 3)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                    else if (g.play_num == 4)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
                     g.rightpiece.big = up;
                     g.rightpiece.small = down;
 
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    g.rp += 0.72f;
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                    g.V_right.x += 0.72f;
                     g.right = up;
                     p.setagian(up, down);
                 }
+
+                else if (g.right_played > 4 && g.right_played < 7)
+                {
+                    //if (g.right_played == 6)
+                    //{
+                    //    g.V_right.x += 0.48f;
+                    //}
+                    //print("l true");
+                    g.right_played++;
+                    g.rightpiece.big = up;
+                    g.rightpiece.small = down;
+
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                    if (g.play_num == 2)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+
+                    g.V_right.y -= 0.72f;
+                    g.right = up;
+                    p.setagian(up, down);
+                }
+                else if (g.right_played > 6)
+                {
+                    if (g.right_played == 7)
+                    {
+                        g.V_right.x -= 0.48f;
+                        g.V_right.y += 0.48f;
+                    }
+
+                    g.right_played++;
+                    if (g.play_num == 3)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                    else if (g.play_num == 4)
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                    g.rightpiece.big = up;
+                    g.rightpiece.small = down;
+
+                    StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                    g.V_right.x -= 0.72f;
+                    g.right = up;
+                    p.setagian(up, down);
+                }
+
+
+            }
 
 
 
         }
         else
         {
-            if(up == g.left&&(g.leftpiece.big!=g.leftpiece.small))
-            {
-                
-                g.lp -= 0.24f;
-            }
-            else if (up == g.right && (g.rightpiece.big != g.rightpiece.small))
-            {
-                
-                g.rp += 0.24f;
-            }
-            else if (down == g.left && (g.leftpiece.big != g.leftpiece.small))
-            {
-                
-                g.lp -= 0.24f;
-            }
-            else if (down == g.right && (g.rightpiece.big != g.rightpiece.small))
-            {
-                
-                g.rp += 0.24f;
-            }
+            
 
 
 
 
 
-            if (up == g.left)
-            {
-                g.leftpiece.big = up;
-                g.leftpiece.small = down;
-            }
-            else if (up == g.right)
-            {
-                g.rightpiece.big = up;
-                g.rightpiece.small = down;
-            }
-            else if (down == g.left)
-            {
-                g.leftpiece.big = up;
-                g.leftpiece.small = down;
-            }
-            else if (down == g.right)
-            {
-                g.rightpiece.big = up;
-                g.rightpiece.small = down;
-            }
+
+
+
+
 
 
 
@@ -146,135 +254,421 @@ public class CPU_Move : MonoBehaviour
             {
                 if (up == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
-                    g.lp -= 0.72f;
-                    g.left = down;
-                    p.setagian(up, down);
+                    if (g.left_played < 5)
+                    {
+
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_left.x -= 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.y += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.x += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
                     
                 }
                 else if (up == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.rp += 0.72f;
-                    g.right = down;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.x += 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.y -= 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_right.x -= 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (down == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.lp -= 0.72f;
-                    g.left = up;
-                    p.setagian(up, down);
-                    
+                    if (g.left_played < 5)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.x -= 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up,down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.y += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_left.x += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+
+
                 }
                 else if (down == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
-                    g.rp += 0.72f;
-                    g.right = up;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_right.x += 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up,down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.y -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+
+                    else if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.x -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
                 }
             }
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (p.s == "3")
             {
                 if (up == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                    g.lp -= 0.72f;
-                    g.left = down;
-                    p.setagian(up, down);
-                    
+                    if (g.left_played < 5)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.x -= 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up,down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.y += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -2)));
+                        g.V_left.x += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (up == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.rp += 0.72f;
-                    g.right = down;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.x += 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_right.y -= 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.x += 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (down == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.lp -= 0.72f;
-                    g.left = up;
-                    p.setagian(up, down);
-                    
+                    if (g.left_played < 5)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.x -= 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_left.y += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.x += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (down == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                    g.rp += 0.72f;
-                    g.right = up;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.x += 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up,down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.y -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+                    if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -2)));
+                        g.V_right.x -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
                 }
             }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (p.s == "4")
             {
                 if (up == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                    g.lp -= 0.72f;
-                    g.left = down;
-                    p.setagian(up, down);
-                    
+                    if (g.left_played < 5)
+                    {
+                        checkleft(up,down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.x -= 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.y += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -2)));
+                        g.V_left.x += 0.72f;
+                        g.left = down;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (up == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.rp += 0.72f;
-                    g.right = down;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.x += 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up,down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_right.y -= 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.x += 0.72f;
+                        g.right = down;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (down == g.left)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.lp, 0, 4.185483f), 1));
-                    //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
-                    g.lp -= 0.72f;
-                    g.left = up;
-                    p.setagian(up, down);
-                    
+                    if (g.left_played < 5)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_left.x -= 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 4 && g.left_played < 7)
+                    {
+                        checkleft(up,down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 1)));
+                        g.V_left.y += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.left_played > 6)
+                    {
+                        checkleft(up, down);
+                        g.left_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_left, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_left.x += 0.72f;
+                        g.left = up;
+                        p.setagian(up, down);
+                    }
                 }
                 else if (down == g.right)
                 {
-                    
-                    StartCoroutine(moveToPosition(gameObject.transform, new Vector3(g.rp, 0, 4.185483f), 1));
-                    StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                    g.rp += 0.72f;
-                    g.right = up;
-                    p.setagian(up, down);
-                    
+                    if (g.right_played < 5)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
+                        g.V_right.x += 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 4 && g.right_played < 7)
+                    {
+                        checkright(up,down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        StartCoroutine(flip2(1, 2, new Vector3(0, 0, -1)));
+                        g.V_right.y -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
+                    else if (g.right_played > 6)
+                    {
+                        checkright(up, down);
+                        g.right_played++;
+                        StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
+                        //StartCoroutine(flip2(1, 2, new Vector3(0, 0, -2)));
+                        g.V_right.x -= 0.72f;
+                        g.right = up;
+                        p.setagian(up, down);
+                    }
                 }
             }
 
         }
-        
+
+
+
+        print("cpu "+ p.s +" ,turn "+g.turn_num+": "+ g.V_left + "      " + g.V_right);
     }
 
         IEnumerator flip(float time,int up,int down)
@@ -336,5 +730,169 @@ public class CPU_Move : MonoBehaviour
         }
         g.turn = true;
         
+    }
+
+    void checkleft(int up, int down)
+    {
+        if (up == g.left && (g.leftpiece.big != g.leftpiece.small) && g.left_played < 5)
+        {
+
+            g.V_left.x -= 0.24f;
+        }
+        else if (down == g.left && (g.leftpiece.big != g.leftpiece.small) && g.left_played < 5)
+        {
+
+            g.V_left.x -= 0.24f;
+
+        }
+        else if (up == g.left && (g.leftpiece.big != g.leftpiece.small) && g.left_played > 6)
+        {
+            // print("true1");
+            g.V_left.x += 0.24f;
+        }
+        else if (down == g.left && (g.leftpiece.big != g.leftpiece.small) && g.left_played > 6)
+        {
+            //print("true3");
+            g.V_left.x += 0.24f;
+        }
+        //////////////////////////////////////////////////////////////////////////
+        
+
+        if (g.left_played == 5)
+        {
+            if (g.leftpiece.big == g.leftpiece.small)
+            {
+                g.V_left.x += 0.72f;
+                g.V_left.y += 0.96f;
+            }
+            else
+            {
+                g.V_left.x += 0.48f;
+                g.V_left.y += 0.72f;
+            }
+
+
+        }
+        else if (g.left_played == 6 && g.leftpiece.big != g.leftpiece.small)
+        {
+            g.V_left.y += 0.24f;
+        }
+
+        else if (g.left_played == 7)
+        {
+            if (g.leftpiece.big == g.leftpiece.small)
+            {
+                g.V_left.x += 0.96f;
+                g.V_left.y -= 0.72f;
+            }
+            else
+            {
+                g.V_left.x += 0.48f;
+                g.V_left.y -= 0.48f;
+            }
+
+
+        }
+
+
+        if (up == g.left)
+        {
+
+            g.leftpiece.big = up;
+            g.leftpiece.small = down;
+        }
+
+        else if (down == g.left)
+        {
+
+            g.leftpiece.big = up;
+            g.leftpiece.small = down;
+        }
+    }
+
+    void checkright(int up, int down)
+    {
+
+        if (up == g.right && (g.rightpiece.big != g.rightpiece.small) && g.right_played < 5)
+        {
+
+            g.V_right.x += 0.24f;
+        }
+
+
+
+        else if (down == g.right && (g.rightpiece.big != g.rightpiece.small) && g.right_played < 5)
+        {
+
+            g.V_right.x += 0.24f;
+
+        }
+        else if (up == g.right && (g.rightpiece.big != g.rightpiece.small) && g.right_played > 6)
+        {
+            //print("true2");
+            g.V_right.x -= 0.24f;
+        }
+
+        else if (down == g.right && (g.rightpiece.big != g.rightpiece.small) && g.right_played > 6)
+        {
+            //print("true4");
+            g.V_right.x -= 0.24f;
+        }
+        /////////////////////////////////////////////////////////////////////////////////
+
+        if (g.right_played == 5)
+        {
+            if (g.rightpiece.big == g.rightpiece.small)
+            {
+                g.V_right.x -= 0.72f;
+                g.V_right.y -= 0.96f;
+            }
+            else
+            {
+                g.V_right.x -= 0.48f;
+                g.V_right.y -= 0.72f;
+            }
+
+
+        }
+
+
+
+
+        else if (g.right_played == 6 && g.rightpiece.big != g.rightpiece.small)
+        {
+            g.V_right.y -= 0.24f;
+        }
+
+        else if (g.right_played == 7)
+        {
+            if (g.rightpiece.big == g.rightpiece.small)
+
+            {
+                g.V_right.x -= 0.96f;
+                g.V_right.y += 0.72f;
+            }
+            else
+            {
+                g.V_right.x -= 0.48f;
+                g.V_right.y += 0.48f;
+            }
+
+
+        }
+
+
+        if (up == g.right)
+        {
+
+            g.rightpiece.big = up;
+            g.rightpiece.small = down;
+        }
+        else if (down == g.right)
+        {
+
+            g.rightpiece.big = up;
+            g.rightpiece.small = down;
+        }
     }
 }

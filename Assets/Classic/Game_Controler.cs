@@ -5,11 +5,12 @@ using UnityEngine;
 public class Game_Controler : MonoBehaviour
 {
     public int round = 1;
-    public int left, right, play_num=0; //Left playable - Right playable - Left position - Right position
-    public float lp, rp;
+    public int left, right, play_num=0; //Left playable - Right playable - Player number
     public bool begining,turn;
     public Piece leftpiece, rightpiece;
-    public float rf = 1, lf = 1;
+    public int turn_num = 0;       // for debugging
+    public int left_played, right_played;
+    public Vector3 V_left, V_right;
 
 
 
@@ -19,10 +20,13 @@ public class Game_Controler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        V_left = new Vector3(0, 0, 0);
+        V_right = new Vector3(0, 0, 0);
         leftpiece = new Piece();
         rightpiece = new Piece();
-        lp = 0;
-        rp = 0;
+        left_played = 0;
+        right_played = 0;
 
         begining = true;
         Game g = GameObject.Find("Game_Starter").GetComponent<Game>();
@@ -62,8 +66,6 @@ public class Game_Controler : MonoBehaviour
 
         }
 
-        lp = 0;
-        rp = 0;
         if (play_num == 1)
             GameObject.Find("Player").GetComponent<Player>().turn = true;
         else GameObject.Find("CPU_" + play_num.ToString()).GetComponent<CPU>().turn = true;
@@ -73,16 +75,24 @@ public class Game_Controler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+
+
         if (turn)
         {
-            if(rp>5)
-            {
-                rf = 2;
-            }
-            if (lp > 5)
-            {
-                lf = 2;
-            }
+            turn_num++;
+            
+
+
+
+
+            
+
+
+
+
+
 
 
 

@@ -2470,10 +2470,13 @@ MonoBehaviour:
   left: 0
   right: 0
   play_num: 0
-  lp: 0
-  rp: 0
   begining: 0
   turn: 0
+  turn_num: 0
+  left_played: 0
+  right_played: 0
+  V_left: {x: 0, y: 0, z: 0}
+  V_right: {x: 0, y: 0, z: 0}
 --- !u!4 &1579111130
 Transform:
   m_ObjectHideFlags: 0
