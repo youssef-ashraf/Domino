@@ -40,6 +40,8 @@ public class CPU_Move : MonoBehaviour
 
         if (g.begining && g.round == 1)
         {
+            g.lefty = gameObject;
+            g.righty = gameObject;
             g.leftpiece.big = 6;
             g.leftpiece.small = 6;
             g.rightpiece.big = 6;
@@ -61,6 +63,8 @@ public class CPU_Move : MonoBehaviour
         }
         else if(g.begining)
         {
+            g.lefty = gameObject;
+            g.righty = gameObject;
             g.leftpiece.big = up;
             g.leftpiece.small = down;
             g.rightpiece.big = up;
@@ -86,6 +90,7 @@ public class CPU_Move : MonoBehaviour
             //print(g.left_played + " "+ g.right_played);
             if (up == g.left)
             {
+                g.lefty = gameObject;
 
                 if (g.left_played == 5 )
                 {
@@ -162,6 +167,7 @@ public class CPU_Move : MonoBehaviour
             }
             else
             {
+                g.righty = gameObject;
                 if (g.right_played == 5 )
                 {
                     g.V_right.x -= 0.48f;
@@ -254,6 +260,7 @@ public class CPU_Move : MonoBehaviour
             {
                 if (up == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
 
@@ -289,6 +296,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (up == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -322,6 +330,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (down == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -358,6 +367,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (down == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -396,6 +406,7 @@ public class CPU_Move : MonoBehaviour
             {
                 if (up == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -429,6 +440,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (up == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -455,13 +467,14 @@ public class CPU_Move : MonoBehaviour
                         g.right_played++;
                         StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
                         StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                        g.V_right.x += 0.72f;
+                        g.V_right.x -= 0.72f;
                         g.right = down;
                         p.setagian(up, down);
                     }
                 }
                 else if (down == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -495,6 +508,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (down == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -532,6 +546,7 @@ public class CPU_Move : MonoBehaviour
             {
                 if (up == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up,down);
@@ -565,6 +580,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (up == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -591,13 +607,14 @@ public class CPU_Move : MonoBehaviour
                         g.right_played++;
                         StartCoroutine(moveToPosition(gameObject.transform, g.V_right, 1));
                         StartCoroutine(flip2(1, 2, new Vector3(0, 0, 2)));
-                        g.V_right.x += 0.72f;
+                        g.V_right.x -= 0.72f;
                         g.right = down;
                         p.setagian(up, down);
                     }
                 }
                 else if (down == g.left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -631,6 +648,7 @@ public class CPU_Move : MonoBehaviour
                 }
                 else if (down == g.right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -668,7 +686,7 @@ public class CPU_Move : MonoBehaviour
 
 
 
-        print("cpu "+ p.s +" ,turn "+g.turn_num+": "+ g.V_left + "      " + g.V_right);
+        //print("cpu "+ p.s +" ,turn "+g.turn_num+": "+ g.V_left + "      " + g.V_right);
     }
 
         IEnumerator flip(float time,int up,int down)

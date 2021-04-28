@@ -7,36 +7,43 @@ public class OnTouchDown : MonoBehaviour
     Game_Controler g;
     GameObject game;
     Player p;
-    bool finish = true;
-    
+    public bool left, right;
+    public bool choice = true;
+
     private void Start()
     {
+        left = true;
+        right = true;
         game = GameObject.Find("Game_Controler");
         g = GameObject.Find("Game_Controler").GetComponent<Game_Controler>();
         p = GameObject.Find("Player").GetComponent<Player>();
     }
-    void Update ()
+    void Update()
     {
-        
+
         RaycastHit hit = new RaycastHit();
-        for (int i = 0; i < Input.touchCount; ++i) {
+        for (int i = 0; i < Input.touchCount; ++i) 
+        {
             if (Input.GetTouch(i).phase.Equals(TouchPhase.Began)) {
-            
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
-            if (Physics.Raycast(ray, out hit)) {
-                hit.transform.gameObject.SendMessage("OnMouseDown");
-              }
-           }
-       }
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
+                if (Physics.Raycast(ray, out hit)) {
+                    hit.transform.gameObject.SendMessage("OnMouseDown");
+                }
+            }
+        }
     }
 
 
 
     public void OnMouseDown()
     {
-        if (finish)
+        if (choice)
         {
-            finish = false;
+
+
+            choice = false;
+
 
             int up = int.Parse(gameObject.name.Split('_')[0]);
             int down = int.Parse(gameObject.name.Split('_')[1]);
@@ -44,9 +51,47 @@ public class OnTouchDown : MonoBehaviour
 
             StartCoroutine(ScaleOverTime(1));
 
+            if (((up == g.left && up == g.right) || (down == g.left && down == g.right) || (up == g.left && down == g.right) || (down == g.left && up == g.right)) && (g.left != g.right) && left && right)
+            {
+                //print(g.left != g.right);
+                var gl = GameObject.FindGameObjectsWithTag("Piece");
+                foreach (GameObject obj in gl)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+
+                }
+
+
+                var list1 = FindObjectsOfType<Clickable>();
+                var list2 = FindObjectsOfType<OnTouchDown>();
+                foreach (Component l in list1)
+                {
+                    
+                    Destroy(l);
+                }
+                foreach (Component l in list2)
+                {
+                    if (l != gameObject.GetComponent<OnTouchDown>())
+                        Destroy(l);
+                }
+
+
+
+
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                g.lefty.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                g.righty.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                g.lefty.AddComponent<onT_L_R>().cho = "left";
+                g.righty.AddComponent<onT_L_R>().cho = "right";
+                left = false;
+                right = false;
+
+            }
 
             if (g.begining && g.round == 1)
             {
+                g.lefty = gameObject;
+                g.righty = gameObject;
                 g.leftpiece.big = 6;
                 g.leftpiece.small = 6;
                 g.rightpiece.big = 6;
@@ -59,11 +104,14 @@ public class OnTouchDown : MonoBehaviour
                 g.left = 6;
                 g.begining = false;
                 //
+                
             }
 
 
             else if (g.begining)
             {
+                g.lefty = gameObject;
+                g.righty = gameObject;
                 g.leftpiece.big = up;
                 g.leftpiece.small = down;
                 g.rightpiece.big = up;
@@ -85,8 +133,9 @@ public class OnTouchDown : MonoBehaviour
                 //print(g.left_played + " " + g.right_played);
 
 
-                if (up == g.left)
+                if (up == g.left && left)
                 {
+                    g.lefty = gameObject;
 
                     if (g.left_played == 5)
                     {
@@ -144,8 +193,9 @@ public class OnTouchDown : MonoBehaviour
                         // 
                     }
                 }
-                else
+                else if (right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played == 5)
                     {
                         g.V_right.x -= 0.48f;
@@ -242,8 +292,9 @@ public class OnTouchDown : MonoBehaviour
 
 
 
-                if (up == g.left)
+                if (up == g.left && left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -274,8 +325,9 @@ public class OnTouchDown : MonoBehaviour
 
                     }
                 }
-                else if (up == g.right)
+                else if (up == g.right && right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -306,8 +358,9 @@ public class OnTouchDown : MonoBehaviour
 
                     }
                 }
-                else if (down == g.left)
+                else if (down == g.left && left)
                 {
+                    g.lefty = gameObject;
                     if (g.left_played < 5)
                     {
                         checkleft(up, down);
@@ -339,8 +392,9 @@ public class OnTouchDown : MonoBehaviour
 
                     }
                 }
-                else if (down == g.right)
+                else if (down == g.right && right)
                 {
+                    g.righty = gameObject;
                     if (g.right_played < 5)
                     {
                         checkright(up, down);
@@ -377,7 +431,7 @@ public class OnTouchDown : MonoBehaviour
 
 
             //else if(gameObject.co)
-            print("me " + g.V_left + "    " + g.V_right);
+            //print("me " + g.V_left + "    " + g.V_right);
         }
 
 
@@ -403,6 +457,17 @@ public class OnTouchDown : MonoBehaviour
 
         IEnumerator moveToPosition(Transform transform, Vector3 position, float time)
         {
+            var list1 = FindObjectsOfType<Clickable>();
+            var list2 = FindObjectsOfType<OnTouchDown>();
+            foreach (Component l in list1)
+            {
+                Destroy(l);
+            }
+            foreach (Component l in list2)
+            {
+                if(l != gameObject.GetComponent<OnTouchDown>())
+                    Destroy(l);
+            }
 
             var currentPos = transform.position;
             var t = 0f;
@@ -412,16 +477,8 @@ public class OnTouchDown : MonoBehaviour
                 transform.position = Vector3.Lerp(currentPos, position, t);
                 yield return null;
             }
-            var list1 = FindObjectsOfType<Clickable>();
-            var list2 = FindObjectsOfType<OnTouchDown>();
-            foreach (Component l in list1)
-            {
-                Destroy(l);
-            }
-            foreach (Component l in list2)
-            {
-                Destroy(l);
-            }
+
+            Destroy(gameObject.GetComponent<OnTouchDown>());
             g.turn = true;
         }
 
@@ -602,5 +659,6 @@ public class OnTouchDown : MonoBehaviour
                 g.rightpiece.small = down;
             }
         }
+
     }
 }

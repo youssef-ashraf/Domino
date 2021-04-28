@@ -10,7 +10,7 @@ public class CPU : MonoBehaviour
     GameObject[] hand_graph;
     public string s;
     bool[] clicky = new bool[7];
-    bool[] finalclicky = new bool[7];
+    public bool[] finalclicky = new bool[7];
     List<Piece> l = new List<Piece>();
     Game_Controler g; 
     // Start is called before the first frame update

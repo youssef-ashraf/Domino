@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     Piece[] hand;
     GameObject[] hand_graph;
     bool[] clicky = new bool[7];
-    bool[] finalclicky = new bool[7];
+    public bool[] finalclicky = new bool[7];
     public int played;
     public bool played2;
     Game_Controler g;
