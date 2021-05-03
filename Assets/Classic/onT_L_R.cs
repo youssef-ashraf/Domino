@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,9 +53,12 @@ public class onT_L_R : MonoBehaviour
                 comp.OnMouseDown();
             }
 
-            
 
             var gl = GameObject.FindGameObjectsWithTag("Piece");
+            var ogl = GameObject.FindGameObjectsWithTag("clone");
+            int array1OriginalLength = gl.Length;
+            Array.Resize<GameObject>(ref gl, array1OriginalLength + ogl.Length);
+            Array.Copy(ogl, 0, gl, array1OriginalLength, ogl.Length);
             foreach (GameObject obj in gl)
             {
                 obj.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);

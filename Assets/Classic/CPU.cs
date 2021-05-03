@@ -12,14 +12,14 @@ public class CPU : MonoBehaviour
     bool[] clicky = new bool[7];
     public bool[] finalclicky = new bool[7];
     List<Piece> l = new List<Piece>();
-    Game_Controler g; 
+    Game_Controler g;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         g = GameObject.Find("Game_Controler").GetComponent<Game_Controler>();
         s = gameObject.name.Split('_')[1];
 
-        
+
         if (s == "2")
         {
             hand = GameObject.Find("Game_Starter").GetComponent<Game>().Hand2;
@@ -42,7 +42,7 @@ public class CPU : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(turn)
+        if (turn)
         {
             if (GameObject.Find("Game_Controler").GetComponent<Game_Controler>().begining == true && GameObject.Find("Game_Controler").GetComponent<Game_Controler>().round == 1)
             {
@@ -52,11 +52,11 @@ public class CPU : MonoBehaviour
                     {
                         clicky[i] = true;
                         hand_graph[i].AddComponent<CPU_Move>();
-                        hand_graph[i].GetComponent<CPU_Move>().commit(hand[i].big,hand[i].small,gameObject.GetComponent<CPU>());
+                        hand_graph[i].GetComponent<CPU_Move>().commit(hand[i].big, hand[i].small, gameObject.GetComponent<CPU>());
                     }
                 }
             }
-            else if(GameObject.Find("Game_Controler").GetComponent<Game_Controler>().begining)
+            else if (GameObject.Find("Game_Controler").GetComponent<Game_Controler>().begining)
             {
                 for (int i = 0; i < 7; i++)
                 {
@@ -64,7 +64,7 @@ public class CPU : MonoBehaviour
                     {
                         clicky[i] = true;
                         l.Add(hand[i]);
-                        
+
                     }
                 }
                 System.Random rnd = new System.Random();
@@ -94,7 +94,7 @@ public class CPU : MonoBehaviour
                 l.Clear();
                 for (int i = 0; i < 7; i++)
                 {
-                    if ((hand[i].big == g.left|| hand[i].small == g.left || hand[i].big == g.right || hand[i].small == g.right) && !clicky[i] && !finalclicky[i])
+                    if ((hand[i].big == g.left || hand[i].small == g.left || hand[i].big == g.right || hand[i].small == g.right) && !clicky[i] && !finalclicky[i])
                     {
                         clicky[i] = true;
                         l.Add(hand[i]);
@@ -136,6 +136,7 @@ public class CPU : MonoBehaviour
             if (hand[i].big == up && hand[i].small == down)
             {
                 finalclicky[i] = true;
+
             }
         }
         for (int i = 0; i < 7; i++)
@@ -168,13 +169,53 @@ public class CPU : MonoBehaviour
             vec = new Vector3(5, 0, 0);
             eu = Quaternion.Euler(0, 0, 90);
         }
-        
-        
-        GameObject skip = GameObject.Instantiate(GameObject.Find("Skip"),vec,eu);
+
+
+        GameObject skip = GameObject.Instantiate(GameObject.Find("Skip"), vec, eu);
         yield return new WaitForSeconds(2);
         Destroy(skip);
         yield return new WaitForSeconds(1);
         g.turn = true;
     }
-    
+
+    public void flip_all()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            if (!clicky[i] && !finalclicky[i])
+            {
+                clicky[i] = true;
+                hand_graph[i].AddComponent<CPU_Move>();
+                hand_graph[i].GetComponent<CPU_Move>().flipper(hand[i].big, hand[i].small);
+            }
+        }
+    }
+
+    public int get_score()
+    {
+        int score = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            if (!clicky[i] && !finalclicky[i])
+            {
+                score += hand[i].big + hand[i].small;
+            }
+        }
+        return score;
+    }
+
+
+    public bool check(int num)
+    {
+        bool playable = false;
+        for (int i = 0; i < 7; i++)
+        {
+            if (!clicky[i] && !finalclicky[i] && (num == hand[i].big || num == hand[i].small))
+            {
+                playable = true;
+            }
+        }
+        return playable;
+    }
+
 }

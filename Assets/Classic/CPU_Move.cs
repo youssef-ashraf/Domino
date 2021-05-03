@@ -711,6 +711,7 @@ public class CPU_Move : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         } while (currentTime <= time);
+        
     }
 
 
@@ -746,6 +747,8 @@ public class CPU_Move : MonoBehaviour
             transform.position = Vector3.Lerp(currentPos, position, t);
             yield return null;
         }
+
+        
         g.turn = true;
         
     }
@@ -913,4 +916,12 @@ public class CPU_Move : MonoBehaviour
             g.rightpiece.small = down;
         }
     }
+
+
+    public void flipper(int up, int down)
+    {
+        StartCoroutine(flip(1, up, down));
+        StartCoroutine(flip2(1, 1, new Vector3(0, 1, 0)));
+    }
+    
 }

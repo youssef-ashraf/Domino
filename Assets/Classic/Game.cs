@@ -21,8 +21,10 @@ public class Game : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    public void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         float start_pos = -2.88f;
         int i = 0;
         int count = 27;
@@ -80,6 +82,7 @@ public class Game : MonoBehaviour
         {   
             var g = GameObject.Find("random");
             Hand2_rand[i] = GameObject.Instantiate(g, new Vector3(start_pos, 3.9f, g.transform.position.z), Quaternion.identity);
+            Hand2_rand[i].tag = "clone";
             start_pos = start_pos + 0.96f;
             i++;
         }
@@ -92,6 +95,7 @@ public class Game : MonoBehaviour
         {
             var g = GameObject.Find("random");
             Hand3_rand[i] = GameObject.Instantiate(g, new Vector3(-7.8f, start_pos, g.transform.position.z), Quaternion.Euler(0,0,90));
+            Hand3_rand[i].tag = "clone";
             start_pos = start_pos + 0.96f;
             i++;
         }
@@ -104,6 +108,7 @@ public class Game : MonoBehaviour
         {
             var g = GameObject.Find("random");
             Hand4_rand[i] = GameObject.Instantiate(g, new Vector3(7.8f, start_pos, g.transform.position.z), Quaternion.Euler(0, 0, 90));
+            Hand4_rand[i].tag = "clone";
             start_pos = start_pos + 0.96f;
             i++;
         }

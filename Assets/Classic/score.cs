@@ -19,9 +19,11 @@ public class score : MonoBehaviour
 
     }
 
-    public void do_it()
+    public void do_it(int p,int c1,int c2,int c3)
     {
+        GameObject.Find("Score").GetComponent<UnityEngine.UI.Text>().text = "Player      " + p + "\nBot 1        " + c1 + "\nBot 2        " + c2 + "\nBot 3        " + c3;
         StartCoroutine(ScaleOverTime(0.5f));
+        
     }
 
 

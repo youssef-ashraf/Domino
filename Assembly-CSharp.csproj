@@ -68,6 +68,7 @@
     <Compile Include="Assets\Classic\Clickable.cs" />
     <Compile Include="Assets\Classic\Game.cs" />
     <Compile Include="Assets\Classic\Game_Controler.cs" />
+    <Compile Include="Assets\Classic\Next.cs" />
     <Compile Include="Assets\Classic\OnTouchDown.cs" />
     <Compile Include="Assets\Classic\Player.cs" />
     <Compile Include="Assets\Classic\onT_L_R.cs" />

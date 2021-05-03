@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     Game_Controler g;
     bool skipper;
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         skipper = true;
         g = GameObject.Find("Game_Controler").GetComponent<Game_Controler>();
@@ -128,5 +128,29 @@ public class Player : MonoBehaviour
         g.turn = true;
     }
 
-    
+    public int get_score()
+    {
+        int score = 0;
+        for (int i = 0; i < 7; i++)
+        {
+            if (!clicky[i] && !finalclicky[i])
+            {
+                score += hand[i].big + hand[i].small;
+            }
+        }
+        return score;
+    }
+
+    public bool check(int num)
+    {
+        bool playable = false;
+        for (int i = 0; i < 7; i++)
+        {
+            if (!clicky[i] && !finalclicky[i] &&(num == hand[i].big || num == hand[i].small))
+            {
+                playable = true;
+            }
+        }
+        return playable;
+    }
 }

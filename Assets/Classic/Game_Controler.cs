@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Game_Controler : MonoBehaviour
 {
-    public int round = 1;
+    public int round = 1;               // round num
     public int left, right, play_num=0; //Left playable - Right playable - Player number
-    public bool begining,turn;
-    public Piece leftpiece, rightpiece;
+    public bool begining,turn;           // controllers
+    public Piece leftpiece, rightpiece; //left and right in the form of whole piece
     public int turn_num = 0;       // for debugging
-    public int left_played, right_played;
+    public int left_played, right_played; 
     public Vector3 V_left, V_right;
-    public GameObject lefty, righty;
+    public GameObject lefty, righty;  // left and right actual objects
 
-    int p_score, cpu1, cpu2, cpu3;
-    float timer;
+    int p_score, cpu1, cpu2, cpu3;  //Scores
+    public float timer;
 
     bool checker = true;
     bool final_won;
-    string winner;
+    public string winner;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         
         V_left = new Vector3(0, 0, 0);
@@ -83,6 +83,7 @@ public class Game_Controler : MonoBehaviour
         if (checker)
         {
             checkwin();
+            checkclosed();
         }
 
         if(final_won)
@@ -91,7 +92,81 @@ public class Game_Controler : MonoBehaviour
             if (timer < 3.5f)
                 return;
 
-            FindObjectOfType<score>().do_it();
+            if(winner == "pl")
+            {
+                for (int i = 2; i < 5; i++)
+                {
+                    p_score += GameObject.Find("CPU_" + i).GetComponent<CPU>().get_score();
+                }
+
+                for (int i = 2; i < 5; i++)
+                {
+                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
+                }
+
+                if (p_score < 101)
+                {
+                    FindObjectOfType<Next>().grow();
+                }
+                
+            }
+
+
+            else if (winner == "c2")
+            {
+                for (int i = 3; i < 5; i++)
+                {
+                    cpu1 += GameObject.Find("CPU_" + i).GetComponent<CPU>().get_score();
+                }
+                cpu1 += GameObject.Find("Player").GetComponent<Player>().get_score();
+
+                for (int i = 2; i < 5; i++)
+                {
+                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
+                }
+
+                if (cpu1 < 101)
+                {
+                    FindObjectOfType<Next>().grow();
+                }
+            }
+
+
+            else if (winner == "c3")
+            {
+                cpu2 += GameObject.Find("Player").GetComponent<Player>().get_score();
+                cpu2 += GameObject.Find("CPU_2").GetComponent<CPU>().get_score();
+                cpu2 += GameObject.Find("CPU_4").GetComponent<CPU>().get_score();
+                for (int i = 2; i < 5; i++)
+                {
+                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
+                }
+
+                if (cpu2 < 101)
+                {
+                    FindObjectOfType<Next>().grow();
+                }
+            }
+
+
+            else if (winner == "c4")
+            {
+                cpu3 += GameObject.Find("Player").GetComponent<Player>().get_score();
+                cpu3 += GameObject.Find("CPU_2").GetComponent<CPU>().get_score();
+                cpu3 += GameObject.Find("CPU_3").GetComponent<CPU>().get_score();
+                for (int i = 2; i < 5; i++)
+                {
+                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
+                }
+
+                if (cpu3 < 101)
+                {
+                    FindObjectOfType<Next>().grow();
+                }
+            }
+
+
+            FindObjectOfType<score>().do_it(p_score,cpu1,cpu2,cpu3);
             final_won = false;
             turn = false;
             
@@ -165,7 +240,7 @@ public class Game_Controler : MonoBehaviour
         }
         if(won)
         {
-            winner = "p";
+            winner = "pl";
             turn = false;
             checker = false;
             final_won = true;
@@ -227,4 +302,85 @@ public class Game_Controler : MonoBehaviour
         }
 
     }
+
+
+
+
+    void checkclosed()
+    {
+        bool closed = true;
+        var p = GameObject.Find("Player").GetComponent<Player>();
+        var cp2 = GameObject.Find("CPU_2").GetComponent<CPU>();
+        var cp3 = GameObject.Find("CPU_3").GetComponent<CPU>();
+        var cp4 = GameObject.Find("CPU_4").GetComponent<CPU>();
+
+        if(p.check(left))
+        {
+            closed = false;
+        }
+        if (p.check(right))
+        {
+            closed = false;
+        }
+        if (cp2.check(left))
+        {
+            closed = false;
+        }
+        if (cp2.check(right))
+        {
+            closed = false;
+        }
+        if (cp3.check(left))
+        {
+            closed = false;
+        }
+        if (cp3.check(right))
+        {
+            closed = false;
+        }
+        if (cp4.check(left))
+        {
+            closed = false;
+        }
+        if (cp4.check(right))
+        {
+            closed = false;
+        }
+
+        if(closed)
+        {
+            var sc1 = p.get_score();
+            var sc2 = cp2.get_score();
+            var sc3 = cp2.get_score();
+            var sc4 = cp2.get_score();
+
+            if (sc1 < sc2 && sc1 < sc3 && sc1 < sc4)
+            {
+                winner = "pl";
+            }
+            if (sc2 < sc1 && sc2 < sc3 && sc2 < sc4)
+            {
+                winner = "c2";
+            }
+            if (sc3 < sc1 && sc3 < sc2 && sc3 < sc4)
+            {
+                winner = "c3";
+            }
+            if (sc4 < sc1 && sc4 < sc2 && sc4 < sc3)
+            {
+                winner = "c4";
+            }
+
+            turn = false;
+            checker = false;
+            final_won = true;
+            return;
+        }
+    }
+
+
+
+
+
+
 }
