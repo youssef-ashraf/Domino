@@ -51,24 +51,20 @@ public class Next : MonoBehaviour
         g.left = new int(); g.right = new int();
         g.timer = 0;
         g.turn_num = 0;
-        Destroy(g.lefty);
-        Destroy(g.righty);
+        g.lefty = null;
+        g.righty = null;
 
 
         var pl = FindObjectOfType<Player>();
-        var player = pl.gameObject;
-        Destroy(pl);
-        player.AddComponent<Player>();
-        pl = player.GetComponent<Player>();
+        pl.clicky = new bool[7];
+        pl.finalclicky = new bool[7];
         pl.Start();
 
-        var cpus = FindObjectsOfType<CPU>();
+    var cpus = FindObjectsOfType<CPU>();
         for(int i = 0;i<3;i++)
         {
-            var cp = cpus[i].gameObject;
-            Destroy(cpus[i]);
-            cp.AddComponent<CPU>();
-            cpus[i] = cp.GetComponent<CPU>();
+            cpus[i].clicky = new bool[7];
+            cpus[i].finalclicky = new bool[7];
             cpus[i].Start();
         }
 
@@ -93,31 +89,28 @@ public class Next : MonoBehaviour
         GameObject.Find("Scoreboard").transform.localScale = new Vector3(0,0,1);
         gameObject.transform.localScale = new Vector3(0, 0, 1);
         
-        pl.Start();
-        cpus[0].Start();
-        cpus[1].Start();
-        cpus[2].Start();
+        
 
 
         g.Start();
-
-        if (g.winner == "pl")
-        {
+        g.checker = true;
+        //if (g.winner == "pl")
+        //{
             
-            pl.turn = true;
-        }
-        else if (g.winner == "c2")
-        {
-            cpus[0].turn = true;
-        }
-        else if (g.winner == "c3")
-        {
-            cpus[1].turn = true;
-        }
-        else if (g.winner == "c4")
-        {
-            cpus[2].turn = true;
-        }
+        //    pl.turn = true;
+        //}
+        //else if (g.winner == "c2")
+        //{
+        //    cpus[0].turn = true;
+        //}
+        //else if (g.winner == "c3")
+        //{
+        //    cpus[1].turn = true;
+        //}
+        //else if (g.winner == "c4")
+        //{
+        //    cpus[2].turn = true;
+        //}
 
     }
 

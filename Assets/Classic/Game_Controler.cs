@@ -16,7 +16,7 @@ public class Game_Controler : MonoBehaviour
     int p_score, cpu1, cpu2, cpu3;  //Scores
     public float timer;
 
-    bool checker = true;
+    public bool checker = true;
     bool final_won;
     public string winner;
 
@@ -99,10 +99,7 @@ public class Game_Controler : MonoBehaviour
                     p_score += GameObject.Find("CPU_" + i).GetComponent<CPU>().get_score();
                 }
 
-                for (int i = 2; i < 5; i++)
-                {
-                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
-                }
+                
 
                 if (p_score < 101)
                 {
@@ -120,10 +117,7 @@ public class Game_Controler : MonoBehaviour
                 }
                 cpu1 += GameObject.Find("Player").GetComponent<Player>().get_score();
 
-                for (int i = 2; i < 5; i++)
-                {
-                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
-                }
+                
 
                 if (cpu1 < 101)
                 {
@@ -137,10 +131,7 @@ public class Game_Controler : MonoBehaviour
                 cpu2 += GameObject.Find("Player").GetComponent<Player>().get_score();
                 cpu2 += GameObject.Find("CPU_2").GetComponent<CPU>().get_score();
                 cpu2 += GameObject.Find("CPU_4").GetComponent<CPU>().get_score();
-                for (int i = 2; i < 5; i++)
-                {
-                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
-                }
+                
 
                 if (cpu2 < 101)
                 {
@@ -154,15 +145,23 @@ public class Game_Controler : MonoBehaviour
                 cpu3 += GameObject.Find("Player").GetComponent<Player>().get_score();
                 cpu3 += GameObject.Find("CPU_2").GetComponent<CPU>().get_score();
                 cpu3 += GameObject.Find("CPU_3").GetComponent<CPU>().get_score();
-                for (int i = 2; i < 5; i++)
-                {
-                    GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
-                }
+                
 
                 if (cpu3 < 101)
                 {
                     FindObjectOfType<Next>().grow();
                 }
+            }
+
+            else
+            {
+                FindObjectOfType<Next>().grow();
+            }
+
+
+            for (int i = 2; i < 5; i++)
+            {
+                GameObject.Find("CPU_" + i).GetComponent<CPU>().flip_all();
             }
 
 
@@ -351,9 +350,9 @@ public class Game_Controler : MonoBehaviour
         {
             var sc1 = p.get_score();
             var sc2 = cp2.get_score();
-            var sc3 = cp2.get_score();
-            var sc4 = cp2.get_score();
-
+            var sc3 = cp3.get_score();
+            var sc4 = cp4.get_score();
+            print(sc1 + " " + sc2 + " " + sc3 + " " + sc4);
             if (sc1 < sc2 && sc1 < sc3 && sc1 < sc4)
             {
                 winner = "pl";

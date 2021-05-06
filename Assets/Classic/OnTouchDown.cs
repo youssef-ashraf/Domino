@@ -48,7 +48,7 @@ public class OnTouchDown : MonoBehaviour
 
             int up = int.Parse(gameObject.name.Split('_')[0]);
             int down = int.Parse(gameObject.name.Split('_')[1]);
-            p.setagian(up, down);
+            
 
             StartCoroutine(ScaleOverTime(1));
 
@@ -90,7 +90,12 @@ public class OnTouchDown : MonoBehaviour
                 g.righty.AddComponent<onT_L_R>().cho = "right";
                 left = false;
                 right = false;
+                
+            }
 
+            else
+            {
+                p.setagian(up, down);
             }
 
             if (g.begining && g.round == 1)

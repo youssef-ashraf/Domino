@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public bool turn;
     Piece[] hand;
     GameObject[] hand_graph;
-    bool[] clicky = new bool[7];
+    public bool[] clicky = new bool[7];
     public bool[] finalclicky = new bool[7];
     public int played;
     public bool played2;
@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
         bool playable = false;
         for (int i = 0; i < 7; i++)
         {
-            if (!clicky[i] && !finalclicky[i] &&(num == hand[i].big || num == hand[i].small))
+            if ( !finalclicky[i] &&(num == hand[i].big || num == hand[i].small))
             {
                 playable = true;
             }

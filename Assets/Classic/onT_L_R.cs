@@ -34,7 +34,8 @@ public class onT_L_R : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if(choice)
+        //
+        if (choice)
         {
             choice = false;
             var comp = FindObjectOfType<OnTouchDown>();

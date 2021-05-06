@@ -6,10 +6,10 @@ using UnityEngine;
 public class CPU : MonoBehaviour
 {
     public bool turn;
-    Piece[] hand;
+    public Piece[] hand;
     GameObject[] hand_graph;
     public string s;
-    bool[] clicky = new bool[7];
+    public bool[] clicky = new bool[7];
     public bool[] finalclicky = new bool[7];
     List<Piece> l = new List<Piece>();
     Game_Controler g;
@@ -58,6 +58,7 @@ public class CPU : MonoBehaviour
             }
             else if (GameObject.Find("Game_Controler").GetComponent<Game_Controler>().begining)
             {
+                l.Clear();
                 for (int i = 0; i < 7; i++)
                 {
                     if (hand[i].big == hand[i].small && !clicky[i] && !finalclicky[i])
@@ -210,7 +211,7 @@ public class CPU : MonoBehaviour
         bool playable = false;
         for (int i = 0; i < 7; i++)
         {
-            if (!clicky[i] && !finalclicky[i] && (num == hand[i].big || num == hand[i].small))
+            if (!finalclicky[i] && (num == hand[i].big || num == hand[i].small))
             {
                 playable = true;
             }
