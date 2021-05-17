@@ -338,19 +338,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Classic
+    - Assets/Menu
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Classic
+  - Assets/Menu
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\adelt\Documents\GitHub\Domino
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 903b0000
-    m_LastClickedID: 15248
+    m_SelectedIDs: fc3b0000
+    m_LastClickedID: 15356
     m_ExpandedIDs: 00000000803b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -404,9 +404,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 4a3a0000
-    m_LastClickedInstanceID: 14922
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 7adcffff8edcffff44ddffff5efbffff
+      m_ExpandedIDs: 5ebcffff72bcffff3ebdffff42bdffffa8f1ffffacfaffff5efbffff9e3b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -564,9 +564,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.779284, y: 0.06114744, z: -1472.5117}
+    m_Target: {x: -37.996544, y: 14.092556, z: -1884.1211}
     speed: 2
-    m_Value: {x: 4.779284, y: 0.06114744, z: -1472.5117}
+    m_Value: {x: -37.996544, y: 14.092556, z: -1884.1211}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -616,9 +616,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 8.748747
+    m_Target: 11.945154
     speed: 2
-    m_Value: 8.748747
+    m_Value: 11.945154
   m_Ortho:
     m_Target: 1
     speed: 2

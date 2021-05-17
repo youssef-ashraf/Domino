@@ -4,38 +4,29 @@ using UnityEngine;
 
 public class Clickable : MonoBehaviour
 {
-    int going = 100;
-    bool isgoing = true;
+    Player p;
+    
     // Start is called before the first frame update
     void Start()
     {
-
+        p = FindObjectOfType<Player>();
+        for (int i = 0; i < 7; i++)
+        {
+            if(!p.finalclicky[i])
+            {
+                p.hand_graph[i].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            }
+        }
+            
     }
 
     // Update is called once per frame
     void Update()
     {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 
-        if (isgoing)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(gameObject.GetComponent<SpriteRenderer>().color.r - 0.01f, gameObject.GetComponent<SpriteRenderer>().color.g - 0.01f, gameObject.GetComponent<SpriteRenderer>().color.b - 0.01f);
-            going -= 1;
-            if (going == 0)
-            {
-                isgoing = false;
-            }
-        }
-        if (!isgoing)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(gameObject.GetComponent<SpriteRenderer>().color.r + 0.01f, gameObject.GetComponent<SpriteRenderer>().color.g + 0.01f, gameObject.GetComponent<SpriteRenderer>().color.b + 0.01f);
-            going += 1;
-            if (going == 100)
-            {
-                isgoing = true;
-            }
-        }
-        
-        
+
+
     }
     
 

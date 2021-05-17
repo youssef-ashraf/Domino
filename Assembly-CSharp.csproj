@@ -73,6 +73,8 @@
     <Compile Include="Assets\Classic\Player.cs" />
     <Compile Include="Assets\Classic\onT_L_R.cs" />
     <Compile Include="Assets\Classic\score.cs" />
+    <Compile Include="Assets\Menu\Button_mover.cs" />
+    <Compile Include="Assets\Menu\Scene_loader.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

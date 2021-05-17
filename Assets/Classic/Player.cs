@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public bool turn;
     Piece[] hand;
-    GameObject[] hand_graph;
+    public GameObject[] hand_graph;
     public bool[] clicky = new bool[7];
     public bool[] finalclicky = new bool[7];
     public int played;
@@ -106,7 +106,12 @@ public class Player : MonoBehaviour
         {
             clicky[i] = false;
         }
-        
+        for (int i = 0; i < 7; i++)
+        {
+            hand_graph[i].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        }
+
+
     }
 
 
