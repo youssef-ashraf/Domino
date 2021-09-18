@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Scene_loader : MonoBehaviour
 {
+    public string sceneName;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +29,10 @@ public class Scene_loader : MonoBehaviour
             }
         }
     }
+
     private void OnMouseDown()
     {
-        SceneManager.LoadScene(sceneName: "Classic");
+        SceneManager.LoadScene(sceneName: sceneName);
     }
 
 }

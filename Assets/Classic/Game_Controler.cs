@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Game_Controler : MonoBehaviour
     public int left_played, right_played; 
     public Vector3 V_left, V_right;
     public GameObject lefty, righty;  // left and right actual objects
+
 
     int p_score, cpu1, cpu2, cpu3;  //Scores
     public float timer;
@@ -175,7 +177,7 @@ public class Game_Controler : MonoBehaviour
         else if (turn)
         {
             turn_num++;
-            
+
 
 
 
@@ -302,7 +304,7 @@ public class Game_Controler : MonoBehaviour
 
     }
 
-
+    
 
 
     void checkclosed()

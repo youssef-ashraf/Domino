@@ -442,6 +442,7 @@ public class OnTouchDown : MonoBehaviour
 
             //else if(gameObject.co)
             //print("me " + g.V_left + "    " + g.V_right);
+            
         }
 
 
@@ -487,9 +488,22 @@ public class OnTouchDown : MonoBehaviour
                 transform.position = Vector3.Lerp(currentPos, position, t);
                 yield return null;
             }
+            
+            var vec = transform.eulerAngles;
+            vec.x = Mathf.Round(vec.x / 90) * 90;
+            vec.y = Mathf.Round(vec.y / 90) * 90;
+            vec.z = Mathf.Round(vec.z / 90) * 90;
+            transform.eulerAngles = vec;
 
             Destroy(gameObject.GetComponent<OnTouchDown>());
+
+
+
+            
+
             g.turn = true;
+            
+
         }
 
 
@@ -501,8 +515,10 @@ public class OnTouchDown : MonoBehaviour
             {
                 transform.Rotate(v * (90 * Time.deltaTime));
                 currentTime += Time.deltaTime;
+                
                 yield return null;
             } while (currentTime <= time);
+            
         }
 
 
@@ -670,5 +686,9 @@ public class OnTouchDown : MonoBehaviour
             }
         }
 
+        
+
     }
+
+
 }

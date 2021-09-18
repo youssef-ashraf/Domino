@@ -748,8 +748,13 @@ public class CPU_Move : MonoBehaviour
             yield return null;
         }
 
-        
+        var vec = transform.eulerAngles;
+        vec.x = Mathf.Round(vec.x / 90) * 90;
+        vec.y = Mathf.Round(vec.y / 90) * 90;
+        vec.z = Mathf.Round(vec.z / 90) * 90;
+        transform.eulerAngles = vec;
         g.turn = true;
+        
         
     }
 
